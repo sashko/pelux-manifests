@@ -1,4 +1,4 @@
-FROM ubuntu:16.04
+FROM ubuntu:18.04
 
 LABEL description="PELUX Yocto build environment"
 
@@ -54,16 +54,13 @@ RUN apt-get update && \
         tmux \
         unzip \
         wget \
-        xz-utils
+        xz-utils \
+        git-lfs
 
 RUN apt-get clean
 
 # For Yocto bitbake -c testimage XML reporting
 RUN pip3 install unittest-xml-reporting
-
-# For git-lfs
-# The downloaded script is needed since git-lfs is not available per default for Ubuntu 16.04
-RUN curl -s https://packagecloud.io/install/repositories/github/git-lfs/script.deb.sh | sudo bash && sudo apt-get install -y git-lfs
 
 # Remove all apt lists to avoid build caching
 RUN rm -rf /var/lib/apt/lists/*
